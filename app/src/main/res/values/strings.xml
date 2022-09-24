@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ChallengeChapter4-Wave15</string>
+    <string name="com">COM</string>
+    <string name="pemain_1">Pemain 1</string>
+    <string name="kertas_gunting_batu">Kertas Gunting Batu</string>
+    <string name="versus">VS</string>
+    <string name="pemain_1_menang">pemain 1 menang</string>
 </resources>
