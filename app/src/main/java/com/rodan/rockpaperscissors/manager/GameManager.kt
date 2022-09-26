@@ -12,8 +12,7 @@ interface GameManager {
 }
 
 interface GameListener {
-    fun onGameStateChanged(gameState: GameState)
-    fun onGameFinished(p1: PlayerSide, p2: PlayerSide)
+    fun gameWinner(p1: Int, p2: Int)
 }
 
 class ComputerEnemyGameManager(private val listener: GameListener): GameManager{
@@ -22,15 +21,6 @@ class ComputerEnemyGameManager(private val listener: GameListener): GameManager{
     }
     private val playerTwo: Player by lazy {
         Player(PlayerSide.PLAYER_TWO)
-    }
-    private val rock: PlayerMenu by lazy {
-        PlayerMenu.ROCK
-    }
-    private val paper: PlayerMenu by lazy {
-        PlayerMenu.PAPER
-    }
-    private val scissors: PlayerMenu by lazy {
-        PlayerMenu.SCISSORS
     }
 
     private lateinit var gameState : GameState
@@ -43,7 +33,6 @@ class ComputerEnemyGameManager(private val listener: GameListener): GameManager{
 
     private fun setGameState(newGameState: GameState){
         gameState = newGameState
-        listener.onGameStateChanged(gameState)
     }
 
     fun startGame(){
@@ -60,8 +49,6 @@ class ComputerEnemyGameManager(private val listener: GameListener): GameManager{
     private fun getPlayerMenuByOrdinal(index: Int): PlayerMenu {
         return PlayerMenu.values()[index]
     }
-
-
 
     fun resetGame() {
         initGame()

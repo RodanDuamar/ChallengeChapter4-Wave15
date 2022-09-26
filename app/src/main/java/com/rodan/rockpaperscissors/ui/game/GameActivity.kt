@@ -28,15 +28,25 @@ class GameActivity : AppCompatActivity(), GameListener {
     }
 
     private fun setOnClickListener(){
+        val rock: Int by lazy {
+            PlayerMenu.ROCK.ordinal
+        }
+        val paper: Int by lazy {
+            PlayerMenu.PAPER.ordinal
+        }
+        val scissors: Int by lazy {
+            PlayerMenu.SCISSORS.ordinal
+        }
+
         binding.apply {
             ivRockLeftPlayer.setOnClickListener {
-                chooseMenu()
+                rock
             }
             ivPaperLeftPlayer.setOnClickListener {
-                chooseMenu()
+                paper
             }
             ivScissorLeftPlayer.setOnClickListener {
-                chooseMenu()
+                scissors
             }
             ivRestart.setOnClickListener {
                 gameManager.restartGame()
@@ -44,25 +54,13 @@ class GameActivity : AppCompatActivity(), GameListener {
         }
     }
 
-    fun chooseMenu() {
-
+    override fun gameWinner(p1: Int, p2: Int) {
+        if ((p1 + 1) % 3 == p2){
+            binding.tvStatusGame.text = getString(R.string.pemain_2_menang)
+        }else if (p1 == p2){
+            binding.tvStatusGame.text = getString(R.string.draw)
+        }else {
+            binding.tvStatusGame.text = getString(R.string.pemain_1_menang)
+        }
     }
-
-    override fun onGameStateChanged(gameState: GameState) {
-
-    }
-
-    override fun onGameFinished(p1: PlayerSide, p2: PlayerSide) {
-    }
-
-//    override fun onGameFinished(p1: PlayerSide, p2: PlayerSide) {
-//        val playerCalc = (p1 + 1) % 3
-//        if (playerCalc == p2){
-//            binding.tvStatusGame.text = getString(R.string.pemain_2_menang)
-//        }else if (p1 == p2){
-//            binding.tvStatusGame.text = getString(R.string.draw)
-//        }else {
-//            binding.tvStatusGame.text = getString(R.string.pemain_1_menang)
-//        }
-//    }
 }
