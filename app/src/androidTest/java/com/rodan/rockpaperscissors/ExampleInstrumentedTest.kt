@@ -1,4 +1,4 @@
-package com.rodan.challengechapter4_wave15
+package com.rodan.rockpaperscissors
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.game.GameActivity">
 
     <ImageView
         android:layout_width="match_parent"
@@ -139,7 +139,7 @@
             android:fontFamily="@font/thunder_font"
             android:textColor="@color/yellow"
             android:textSize="40sp"
-            tools:text="@string/versus"/>
+            android:text="@string/versus"/>
     </FrameLayout>
 
     <FrameLayout
@@ -151,6 +151,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         >
         <ImageView
+            android:id="@+id/iv_restart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="8dp"

@@ -1,4 +1,4 @@
-package com.rodan.challengechapter4_wave15
+package com.rodan.rockpaperscissors
 
 import org.junit.Test
 

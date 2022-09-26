@@ -7,7 +7,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.rodan.challengechapter4_wave15"
+        applicationId "com.rodan.challengechapter4wave15"
         minSdk 22
         targetSdk 32
         versionCode 1
@@ -28,6 +28,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding = true
     }
 }
 
