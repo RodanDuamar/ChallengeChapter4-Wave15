@@ -1,7 +1,6 @@
 package com.rodan.rockpaperscissors.model
 
-import com.rodan.rockpaperscissors.enum.PlayerSide
+import com.rodan.rockpaperscissors.enum.PlayerMenu
 
-data class Player(
-    val playerSide: PlayerSide
-)
+data class Player (var player1: PlayerMenu,
+                  var computer: PlayerMenu)

@@ -1,7 +1,7 @@
 package com.rodan.rockpaperscissors.enum
 
-enum class PlayerMenu {
-    ROCK,
-    PAPER,
-    SCISSORS
+object PlayerMenu {
+    const val ROCK = "rock"
+    const val PAPER = "paper"
+    const val SCISSORS = "scissors"
 }

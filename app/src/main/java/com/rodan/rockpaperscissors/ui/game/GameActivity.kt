@@ -4,63 +4,70 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.rodan.rockpaperscissors.R
 import com.rodan.rockpaperscissors.databinding.ActivityGameBinding
-import com.rodan.rockpaperscissors.enum.GameState
 import com.rodan.rockpaperscissors.enum.PlayerMenu
-import com.rodan.rockpaperscissors.enum.PlayerSide
-import com.rodan.rockpaperscissors.manager.ComputerEnemyGameManager
-import com.rodan.rockpaperscissors.manager.GameListener
 import com.rodan.rockpaperscissors.manager.GameManager
+import com.rodan.rockpaperscissors.manager.PlayerList
 
-class GameActivity : AppCompatActivity(), GameListener {
+class GameActivity : AppCompatActivity(){
     private val binding: ActivityGameBinding by lazy {
         ActivityGameBinding.inflate(layoutInflater)
     }
 
-    private val gameManager: GameManager by lazy {
-        ComputerEnemyGameManager(this)
-    }
+    val manageGame = GameManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        gameManager.initGame()
         setOnClickListener()
+
     }
 
-    private fun setOnClickListener(){
-        val rock: Int by lazy {
-            PlayerMenu.ROCK.ordinal
+    private fun setOnClickListener() {
+        binding.ivRockLeftPlayer.setOnClickListener{
+            manageGame.player1[0]
         }
-        val paper: Int by lazy {
-            PlayerMenu.PAPER.ordinal
+        binding.ivPaperLeftPlayer.setOnClickListener{
+            manageGame.player1[1]
         }
-        val scissors: Int by lazy {
-            PlayerMenu.SCISSORS.ordinal
+        binding.ivScissorLeftPlayer.setOnClickListener{
+            manageGame.player1[2]
         }
 
-        binding.apply {
-            ivRockLeftPlayer.setOnClickListener {
-                rock
-            }
-            ivPaperLeftPlayer.setOnClickListener {
-                paper
-            }
-            ivScissorLeftPlayer.setOnClickListener {
-                scissors
-            }
-            ivRestart.setOnClickListener {
-                gameManager.restartGame()
-            }
+        playGame(manageGame.player1.toString(), manageGame.computer.toString())
+
+        binding.ivRockRightPlayer.setOnClickListener{
+            manageGame.getComputerMenu()
+        }
+        binding.ivPaperRightPlayer.setOnClickListener{
+            manageGame.getComputerMenu()
+        }
+        binding.ivScissorRightPlayer.setOnClickListener{
+            manageGame.getComputerMenu()
         }
     }
 
-    override fun gameWinner(p1: Int, p2: Int) {
-        if ((p1 + 1) % 3 == p2){
-            binding.tvStatusGame.text = getString(R.string.pemain_2_menang)
-        }else if (p1 == p2){
+    fun playGame(pemain1: String, pemain2: String){
+        when{pemain1 == pemain2 -> {
             binding.tvStatusGame.text = getString(R.string.draw)
-        }else {
-            binding.tvStatusGame.text = getString(R.string.pemain_1_menang)
+        }
+            pemain1 == manageGame.player1[2] && pemain2 == manageGame.computer[0] -> {
+                binding.tvStatusGame.text = getString(R.string.pemain_2_menang)
+            }
+            pemain1 == manageGame.player1[2] && pemain2 == manageGame.computer[1] -> {
+                binding.tvStatusGame.text = getString(R.string.pemain_1_menang)
+            }
+            pemain1 == manageGame.player1[1] && pemain2 == manageGame.computer[0] -> {
+                binding.tvStatusGame.text = getString(R.string.pemain_1_menang)
+            }
+            pemain1 == manageGame.player1[1] && pemain2 == manageGame.computer[2] -> {
+                binding.tvStatusGame.text = getString(R.string.pemain_2_menang)
+            }
+            pemain1 == manageGame.player1[0] && pemain2 == manageGame.computer[2] -> {
+                binding.tvStatusGame.text = getString(R.string.pemain_1_menang)
+            }
+            pemain1 == manageGame.player1[0] && pemain2 == manageGame.computer[1] -> {
+                binding.tvStatusGame.text = getString(R.string.pemain_2_menang)
+            }
         }
     }
 }
