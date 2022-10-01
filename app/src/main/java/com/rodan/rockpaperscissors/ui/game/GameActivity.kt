@@ -2,65 +2,106 @@ package com.rodan.rockpaperscissors.ui.game
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.rodan.rockpaperscissors.R
 import com.rodan.rockpaperscissors.databinding.ActivityGameBinding
-import com.rodan.rockpaperscissors.enum.GameState
 import com.rodan.rockpaperscissors.enum.PlayerMenu
-import com.rodan.rockpaperscissors.enum.PlayerSide
-import com.rodan.rockpaperscissors.manager.ComputerEnemyGameManager
-import com.rodan.rockpaperscissors.manager.GameListener
+import com.rodan.rockpaperscissors.enum.Status
 import com.rodan.rockpaperscissors.manager.GameManager
+import kotlin.random.Random
 
-class GameActivity : AppCompatActivity(), GameListener {
+class GameActivity : AppCompatActivity(), GameManager{
+
+    lateinit var player1Choice: PlayerMenu
+    lateinit var start: Status
+
     private val binding: ActivityGameBinding by lazy {
         ActivityGameBinding.inflate(layoutInflater)
-    }
-
-    private val gameManager: GameManager by lazy {
-        ComputerEnemyGameManager(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        gameManager.initGame()
-        setOnClickListener()
+        initGame()
     }
 
-    private fun setOnClickListener(){
-        val rock: Int by lazy {
-            PlayerMenu.ROCK.ordinal
-        }
-        val paper: Int by lazy {
-            PlayerMenu.PAPER.ordinal
-        }
-        val scissors: Int by lazy {
-            PlayerMenu.SCISSORS.ordinal
-        }
+    override fun startGame(gameStatus: Status) {
+        start = gameStatus
+    }
 
-        binding.apply {
-            ivRockLeftPlayer.setOnClickListener {
-                rock
-            }
-            ivPaperLeftPlayer.setOnClickListener {
-                paper
-            }
-            ivScissorLeftPlayer.setOnClickListener {
-                scissors
-            }
-            ivRestart.setOnClickListener {
-                gameManager.restartGame()
-            }
+    fun initGame(){
+        startGame(Status.IDLE)
+        startGame(Status.STARTED)
+        binding.flStartGame.setOnClickListener {
+            Log.d(TAG, "Start button clicked")
+            setOnClickListener()
+            binding.tvStatusGame.text = getString(R.string.versus)
         }
     }
 
-    override fun gameWinner(p1: Int, p2: Int) {
-        if ((p1 + 1) % 3 == p2){
-            binding.tvStatusGame.text = getString(R.string.pemain_2_menang)
-        }else if (p1 == p2){
-            binding.tvStatusGame.text = getString(R.string.draw)
-        }else {
-            binding.tvStatusGame.text = getString(R.string.pemain_1_menang)
+    private fun setOnClickListener() {
+        binding.ivRockLeftPlayer.setOnClickListener{
+            Log.d(TAG, "Rock button clicked")
+            rockLeft()
         }
+        binding.ivPaperLeftPlayer.setOnClickListener{
+            Log.d(TAG,"Paper button clicked")
+            paperLeft()
+        }
+        binding.ivScissorLeftPlayer.setOnClickListener{
+            Log.d(TAG, "Scissor button clicked")
+            scissorsLeft()
+        }
+        binding.ivRestart.setOnClickListener{
+            Log.d(TAG, "Restart button clicked")
+            binding.tvStatusGame.text = getString(R.string.versus)
+        }
+    }
+
+    override fun rockLeft(){
+        val computerChoice = Random.nextInt(3)
+        when (computerChoice){
+            0 -> binding.tvWhatTheyChoose.text = getString(R.string.rock)
+            1 -> binding.tvWhatTheyChoose.text = getString(R.string.paper)
+            2 -> binding.tvWhatTheyChoose.text = getString(R.string.scissors)
+        }
+        player1Choice = PlayerMenu.ROCK
+        when (computerChoice){
+            0 -> binding.tvStatusGame.text = getString(R.string.draw)
+            1 -> binding.tvStatusGame.text = getString(R.string.pemain_1_menang)
+            2 -> binding.tvStatusGame.text = getString(R.string.pemain_2_menang)
+        }
+    }
+    override fun paperLeft(){
+        val computerChoice = Random.nextInt(3)
+        when (computerChoice){
+            0 -> binding.tvWhatTheyChoose.text = getString(R.string.rock)
+            1 -> binding.tvWhatTheyChoose.text = getString(R.string.paper)
+            2 -> binding.tvWhatTheyChoose.text = getString(R.string.scissors)
+        }
+        player1Choice = PlayerMenu.PAPER
+        when (computerChoice){
+            0 -> binding.tvStatusGame.text = getString(R.string.pemain_1_menang)
+            1 -> binding.tvStatusGame.text = getString(R.string.draw)
+            2 -> binding.tvStatusGame.text = getString(R.string.pemain_2_menang)
+        }
+    }
+    override fun scissorsLeft(){
+        val computerChoice = Random.nextInt(3)
+        when (computerChoice){
+            0 -> binding.tvWhatTheyChoose.text = getString(R.string.rock)
+            1 -> binding.tvWhatTheyChoose.text = getString(R.string.paper)
+            2 -> binding.tvWhatTheyChoose.text = getString(R.string.scissors)
+        }
+        player1Choice = PlayerMenu.SCISSORS
+        when (computerChoice) {
+            0 -> binding.tvStatusGame.text = getString(R.string.pemain_2_menang)
+            1 -> binding.tvStatusGame.text = getString(R.string.pemain_1_menang)
+            2 -> binding.tvStatusGame.text = getString(R.string.draw)
+        }
+    }
+
+    companion object {
+        private val TAG = GameActivity::class.java.simpleName
     }
 }

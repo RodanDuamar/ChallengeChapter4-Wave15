@@ -7,4 +7,8 @@
     <string name="pemain_1_menang">pemain 1 menang</string>
     <string name="pemain_2_menang">pemain 2 menang</string>
     <string name="draw">Draw</string>
+    <string name="what_we_choose">What We Choose</string>
+    <string name="rock">Lawan Batu</string>
+    <string name="paper">Lawan Kertas</string>
+    <string name="scissors">Lawan Gunting</string>
 </resources>
