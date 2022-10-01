@@ -1,19 +1,11 @@
 package com.rodan.rockpaperscissors.manager
 
-import com.rodan.rockpaperscissors.enum.PlayerMenu
+import com.rodan.rockpaperscissors.enum.Status
 
-
-class GameManager(): PlayerList(){
-
-    fun getComputerMenu(){
-        computer.random()
-    }
-
+interface GameManager{
+    fun rockLeft()
+    fun paperLeft()
+    fun scissorsLeft()
+    fun startGame(gameStatus: Status)
 }
 
-open class PlayerList(){
-    val player1 = mutableListOf(PlayerMenu.ROCK, PlayerMenu.PAPER, PlayerMenu.SCISSORS)
-    val computer = mutableListOf(PlayerMenu.ROCK, PlayerMenu.PAPER, PlayerMenu.SCISSORS)
-
-
-}
