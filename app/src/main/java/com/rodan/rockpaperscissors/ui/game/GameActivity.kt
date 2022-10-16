@@ -3,6 +3,8 @@ package com.rodan.rockpaperscissors.ui.game
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
 import com.rodan.rockpaperscissors.R
 import com.rodan.rockpaperscissors.databinding.ActivityGameBinding
 import com.rodan.rockpaperscissors.enum.PlayerMenu
@@ -22,7 +24,7 @@ class GameActivity : AppCompatActivity(), GameManager{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        initGame()
+        setOnClickListener()
     }
 
     override fun startGame(gameStatus: Status) {
@@ -32,11 +34,6 @@ class GameActivity : AppCompatActivity(), GameManager{
     fun initGame(){
         startGame(Status.IDLE)
         startGame(Status.STARTED)
-        binding.flStartGame.setOnClickListener {
-            Log.d(TAG, "Start button clicked")
-            setOnClickListener()
-            binding.tvStatusGame.text = getString(R.string.versus)
-        }
     }
 
     private fun setOnClickListener() {
@@ -54,8 +51,21 @@ class GameActivity : AppCompatActivity(), GameManager{
         }
         binding.ivRestart.setOnClickListener{
             Log.d(TAG, "Restart button clicked")
-            binding.tvStatusGame.text = getString(R.string.versus)
+            reset()
         }
+        binding.tvStatusGame.text = getString(R.string.versus)
+    }
+
+    lateinit var ivRockComputer: ImageView
+    lateinit var ivPaperComputer: ImageView
+    lateinit var ivScissorComputer: ImageView
+
+    fun reset(){
+        binding.tvStatusGame.text = getString(R.string.versus)
+        binding.tvWhatTheyChoose.visibility = View.INVISIBLE
+        ivRockComputer.visibility = View.VISIBLE
+        ivPaperComputer.visibility = View.VISIBLE
+        ivScissorComputer.visibility = View.VISIBLE
     }
 
     override fun rockLeft(){
@@ -71,7 +81,28 @@ class GameActivity : AppCompatActivity(), GameManager{
             1 -> binding.tvStatusGame.text = getString(R.string.pemain_1_menang)
             2 -> binding.tvStatusGame.text = getString(R.string.pemain_2_menang)
         }
+
+        ivRockComputer = binding.ivRockRightPlayer
+        ivPaperComputer = binding.ivPaperRightPlayer
+        ivScissorComputer = binding.ivScissorRightPlayer
+
+        if (computerChoice == 0){
+            ivRockComputer.visibility = View.VISIBLE
+            ivPaperComputer.visibility = View.INVISIBLE
+            ivScissorComputer.visibility = View.INVISIBLE
+        }else if (computerChoice == 1){
+            ivRockComputer.visibility = View.INVISIBLE
+            ivPaperComputer.visibility = View.VISIBLE
+            ivScissorComputer.visibility = View.INVISIBLE
+        }else{
+            ivRockComputer.visibility = View.INVISIBLE
+            ivPaperComputer.visibility = View.INVISIBLE
+            ivScissorComputer.visibility = View.VISIBLE
+        }
+
+        binding.tvWhatTheyChoose.visibility = View.VISIBLE
     }
+
     override fun paperLeft(){
         val computerChoice = Random.nextInt(3)
         when (computerChoice){
@@ -85,7 +116,28 @@ class GameActivity : AppCompatActivity(), GameManager{
             1 -> binding.tvStatusGame.text = getString(R.string.draw)
             2 -> binding.tvStatusGame.text = getString(R.string.pemain_2_menang)
         }
+
+        ivRockComputer = binding.ivRockRightPlayer
+        ivPaperComputer = binding.ivPaperRightPlayer
+        ivScissorComputer = binding.ivScissorRightPlayer
+
+        if (computerChoice == 0){
+            ivRockComputer.visibility = View.VISIBLE
+            ivPaperComputer.visibility = View.INVISIBLE
+            ivScissorComputer.visibility = View.INVISIBLE
+        }else if (computerChoice == 1){
+            ivRockComputer.visibility = View.INVISIBLE
+            ivPaperComputer.visibility = View.VISIBLE
+            ivScissorComputer.visibility = View.INVISIBLE
+        }else{
+            ivRockComputer.visibility = View.INVISIBLE
+            ivPaperComputer.visibility = View.INVISIBLE
+            ivScissorComputer.visibility = View.VISIBLE
+        }
+
+        binding.tvWhatTheyChoose.visibility = View.VISIBLE
     }
+
     override fun scissorsLeft(){
         val computerChoice = Random.nextInt(3)
         when (computerChoice){
@@ -99,6 +151,26 @@ class GameActivity : AppCompatActivity(), GameManager{
             1 -> binding.tvStatusGame.text = getString(R.string.pemain_1_menang)
             2 -> binding.tvStatusGame.text = getString(R.string.draw)
         }
+
+        ivRockComputer = binding.ivRockRightPlayer
+        ivPaperComputer = binding.ivPaperRightPlayer
+        ivScissorComputer = binding.ivScissorRightPlayer
+
+        if (computerChoice == 0){
+            ivRockComputer.visibility = View.VISIBLE
+            ivPaperComputer.visibility = View.INVISIBLE
+            ivScissorComputer.visibility = View.INVISIBLE
+        }else if (computerChoice == 1){
+            ivRockComputer.visibility = View.INVISIBLE
+            ivPaperComputer.visibility = View.VISIBLE
+            ivScissorComputer.visibility = View.INVISIBLE
+        }else{
+            ivRockComputer.visibility = View.INVISIBLE
+            ivPaperComputer.visibility = View.INVISIBLE
+            ivScissorComputer.visibility = View.VISIBLE
+        }
+
+        binding.tvWhatTheyChoose.visibility = View.VISIBLE
     }
 
     companion object {
